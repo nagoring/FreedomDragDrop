@@ -47,7 +47,6 @@ public class DragFreedom : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		{
 			transform.position = beginDragVector3;
 		}
-	
 		CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
 		canvasGroup.blocksRaycasts = true;
 	}
@@ -56,17 +55,19 @@ public class DragFreedom : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 	{
 		ItemManager itemManger = ItemManager.instance;
 		RectTransform imageBagRectTransform = itemManger.imageBag.GetComponent<RectTransform>();
-		//canvasの横幅、縦幅
+		RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
+		
+		//bagの横幅,canvas縦幅
 		float imageBagWidth = imageBagRectTransform.sizeDelta.x;
-		float imageBagHeight = imageBagRectTransform.sizeDelta.y;
+		float canvasHeight = canvasRectTransform.sizeDelta.y;
 		
 		//ステータスエリアに侵入した場合は許可しない
 		if (postionX > imageBagWidth) return true;
 		
 		//画面範囲外に行った場合は許可しない
-		if (postionX < 0) return true;
+		if (postionX < 0)return true;
 		if (postionY < 0) return true;
-		if (postionY > imageBagHeight) return true;
+		if (postionY > canvasHeight) return true;
 		
 		return false;
 	}
