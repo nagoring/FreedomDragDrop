@@ -8,21 +8,16 @@ using UnityEngine.UI;
 public class DragFreedom : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
 	private GameObject canvas;
-	private Vector3 diffPostion;
 	// Drag開始位置
 	private Vector3 beginDragVector3;
 	void Start () {
 		gameObject.AddComponent<CanvasGroup>();
 		canvas = GameObject.FindWithTag("CanvasFreedom");
-//		RectTransform rectTransform = canvas.GetComponent<RectTransform>();
-//		Debug.Log("sd:" + rectTransform.sizeDelta.x + " " + rectTransform.sizeDelta.y);
 	}
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
 		
-//		diffPostion = transform.position - eventData.position;
-		diffPostion = (Vector2)transform.position - eventData.position;
 		transform.SetParent(canvas.transform);
 		transform.SetAsLastSibling();
 		transform.localScale = Vector3.one;
@@ -30,30 +25,13 @@ public class DragFreedom : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 		canvasGroup.blocksRaycasts = false;
 
 		beginDragVector3 = new Vector3(transform.position.x, transform.position.y);
-//		ItemManager.instance.beginDragItemLocalPosition = new Vector3(transform.localPosition.x, transform.localPosition.y);
-//		ItemManager.instance.beginDragItemPosition = new Vector3(eventData.position.x,eventData.position.y);
-		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public void OnDrag(PointerEventData eventData)
 	{
 		//ワールド座標変換で座標を操作
 		transform.position = ScreenToWorld(eventData.position.x,eventData.position.y);
-//		Debug.Log("w1:" + transform.localPosition.x + ":" + transform.localPosition.y);
-		Debug.Log("w2:" + eventData.position.x + ":" + eventData.position.y);
-		Debug.Log("w3:" + eventData.pointerDrag.transform.localPosition.x + ":" + eventData.pointerDrag.transform.localPosition.y);
-//		Debug.Log("w2:" + ItemManager.instance.beginDragItemWorldPosition.x + ":" + ItemManager.instance.beginDragItemWorldPosition.y);
-//		if (IsOutOfArea(eventData.position.x, eventData.position.y))
-//		{
-//			transform.position = beginDragVector3;
-//			Debug.Log("aaaaaaaaaaaaaa");
-//		}
-		
 	}
 
 	private Vector3 ScreenToWorld(float screenX, float screenY)
